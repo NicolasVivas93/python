@@ -1,5 +1,6 @@
 import os
 
+COMITENTE = "PODER JUDICIAL"
 perito = input("Perito:")
 pericia = input("Nombre autos:")
 honorarios = float(input("Ingrese honorarios:"))
@@ -29,6 +30,7 @@ def calculoSellos(honor):
 
 print("Perito:", perito)
 print("PER.JUD." + pericia.upper())
+print("Comitente:", COMITENTE)
 print("Honorarios:", honorarios)
 print("Aporte 5%:", aportes5(honorarios))
 print("Total aportes:", calculoCiec())
@@ -38,3 +40,10 @@ print("Sellos:", calculoSellos(honorarios))
 
 #my_file = r'C:\Users\nvivas\Desktop\PERICIAS\LIQUIDACIONESPERITOS.xlsx'
 #os.startfile(my_file)
+
+#Data de ingreso:
+
+
+
+
+#Data salida
