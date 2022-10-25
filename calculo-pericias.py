@@ -46,6 +46,7 @@ def calculoSellos(honor):
 
 
 def validarAportesCaja(aporte_corr, aporte_prof):
+    diferencia = None
     if aporte_corr != aporte_prof:
         diferencia = aporte_corr - aporte_prof
     
@@ -53,6 +54,7 @@ def validarAportesCaja(aporte_corr, aporte_prof):
 
      
 def validarAportesSellos(sellos_corr, sellos_prof):
+    diferencia = None
     if sellos_corr != sellos_prof:
         diferencia = sellos_corr - sellos_prof
     
@@ -90,18 +92,6 @@ print(validarAportesSellos(calculoSellos(honorarios), pago_sellos))
 #my_file = r'C:\Users\nvivas\Desktop\PERICIAS\LIQUIDACIONESPERITOS.xlsx'
 #os.startfile(my_file)
 
-#Data de ingreso:
-# CBU
-
-
-
-
-#Data salida
-# Mostrar total a pagar
-
-# Definir funciones de:
-# - Validación de aportes
-# - Calculo de total a pagar
 
 # Base de datos rudimentaria:
 # - Copiar data a un archivo json
