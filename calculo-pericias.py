@@ -1,6 +1,6 @@
 import os
 
-COMITENTE = "PODER JUDICIAL"
+COMITENTE = "PODER JUDICIAL DE LA PROVINCIA DE CORDOBA"
 
 perito = input("Perito:")
 pericia = input("Nombre autos:")
@@ -62,11 +62,10 @@ def validarAportesSellos(sellos_corr, sellos_prof):
 def totalAPagar(tribunales,aporte_ciec):
     calculo = tribunales - aporte_ciec
     return calculo
-   
-
 
 
 print("Perito:", perito)
+os.mkdir(f"C:/Users/nvivas/Desktop/PERICIAS/{perito}")
 print("PER.JUD." + pericia.upper())
 print("Comitente:", COMITENTE)
 print("Honorarios:", honorarios)
