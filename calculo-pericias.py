@@ -1,14 +1,25 @@
 import os
 
 COMITENTE = "PODER JUDICIAL"
+
 perito = input("Perito:")
 pericia = input("Nombre autos:")
+print("")
 pago_tribunales = float(input("Importe pagado por tribunales:"))
-fecha_pago = input("Fecha de pago:")
 honorarios = float(input("Ingrese honorarios:"))
+fecha_pago = input("Fecha de pago:")
+print("")
 monto_caja = float(input("Ingrese monto aportado a caja:"))
+comprobante_caja = input("Cód. comprobante caja:")
+medio_pago_caja = input("Medio de pago:")
+fecha_pago_caja = input("Fecha de pago caja:")
+print("")
 pago_sellos = float(input("Ingrese monto pagado por sellos:"))
+print("")
 cbu = int(input("CBU perito:"))
+print("")
+print("")
+
 
 def aportes5(honor):
     if honor <= 36000:
@@ -59,10 +70,13 @@ print("Perito:", perito)
 print("PER.JUD." + pericia.upper())
 print("Comitente:", COMITENTE)
 print("Honorarios:", honorarios)
+print("")
 
 print(f"Importe depositado: {pago_tribunales} - Fecha: {fecha_pago}")
 print("Aporte 5%:", aportes5(honorarios))
 print("Total aportes:", calculoCiec())
+print("Total a pagar a perito:" , totalAPagar(pago_tribunales, calculoCiec()))
+print("")
 
 print("Caja:", calculoCaja(honorarios))
 print("Sellos:", calculoSellos(honorarios))
