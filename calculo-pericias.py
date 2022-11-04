@@ -46,19 +46,19 @@ def calculoSellos(honor):
 
 
 def validarAportesCaja(aporte_corr, aporte_prof):
-    diferencia = None
+    diferencia = 0
     if aporte_corr != aporte_prof:
         diferencia = aporte_corr - aporte_prof
     
-    return "Existe una diferencia de aportes de:", diferencia
+    return diferencia
 
      
 def validarAportesSellos(sellos_corr, sellos_prof):
-    diferencia = None
+    diferencia = 0
     if sellos_corr != sellos_prof:
         diferencia = sellos_corr - sellos_prof
     
-    return "Existe una diferencia de sellos de:", diferencia
+    return diferencia
 
 
 def totalAPagar(tribunales,aporte_ciec):
@@ -84,13 +84,20 @@ print("Sellos:", calculoSellos(honorarios))
 print("")
 
 print("VALIDACIONES:")
-print(validarAportesCaja(calculoCaja(honorarios), monto_caja))
-print(validarAportesSellos(calculoSellos(honorarios), pago_sellos))
 
-
-
-#my_file = r'C:\Users\nvivas\Desktop\PERICIAS\LIQUIDACIONESPERITOS.xlsx'
-#os.startfile(my_file)
+if validarAportesCaja(calculoCaja(honorarios), monto_caja) < 0:
+    print("Existe una diferencia de aportes de:", validarAportesCaja(calculoCaja(honorarios), monto_caja), "- (Pagó de más)")
+elif validarAportesCaja(calculoCaja(honorarios), monto_caja) > 0:
+    print("Existe una diferencia de aportes de:", validarAportesCaja(calculoCaja(honorarios), monto_caja), "- (Pagó de menos)")
+else:
+    print("No hay diferencias de aportes a la Caja")
+    
+if validarAportesSellos(calculoSellos(honorarios), pago_sellos) < 0:
+    print("Existe una diferencia de sellos de:", validarAportesSellos(calculoSellos(honorarios), pago_sellos), "- (Pagó de más)")
+elif validarAportesSellos(calculoSellos(honorarios), pago_sellos) > 0:
+    print("Existe una diferencia de sellos de:", validarAportesSellos(calculoSellos(honorarios), pago_sellos), "- (Pagó de menos)")
+else:
+    print("No hay diferencias de pago a sellos")
 
 
 # Base de datos rudimentaria:
