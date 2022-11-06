@@ -11,7 +11,7 @@ universities = [
 ]
 
 total_universities = len(universities)
-print(total_universities)
+
 
 def enrollment_stats(lista):
     lista_de_listas = []
@@ -27,7 +27,7 @@ def enrollment_stats(lista):
 
 def mean(lista):
     promedio = sum(lista) / len(lista)
-    return promedio
+    return round(promedio,2)
 
 def median(lista):
     lista.sort()
@@ -46,8 +46,18 @@ students_and_tuitions = enrollment_stats(universities)
 
 
 total_students = sum(students_and_tuitions[0])
-print(total_students)
-
 total_tuition_fees = sum(students_and_tuitions[1])
-print(total_tuition_fees)
+
+print(f"""
+****************************
+Total students: {total_students:,}
+Total tuition: $ {total_tuition_fees:,}
+
+Student mean: {mean(students_and_tuitions[0]):,}
+Student median: {median(students_and_tuitions[0]):,}
+
+Tuition mean: $ {mean(students_and_tuitions[1]):,}
+Tuition median: $ {median(students_and_tuitions[1]):,}
+****************************
+""")
 
