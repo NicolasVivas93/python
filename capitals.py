@@ -21,8 +21,18 @@ capital = capitals_dict[state]
 
 print(state,capital)
 
-answer = ''
 
-while answer != capital:
-    answer = input(f"What is the capital of {state}?")
+answer = ''
+capital_lower = capital.lower()
+while answer != capital_lower:
+    answer = input(f"What is the capital of {state}?").lower()
+
+    if answer == 'exit':
+        print(f"The correct answer is: {capital}")
+        print("Goodbye")
+        break
+
+if answer == capital_lower:
+    print("Correct")
+
 
