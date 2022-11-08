@@ -1,7 +1,3 @@
-from tabnanny import check
-from turtle import position
-
-
 cardinal_numbers = ('first', 'second', 'third')
 
 print(cardinal_numbers[1])
