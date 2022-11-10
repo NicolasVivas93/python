@@ -9,14 +9,18 @@ form = login_html.select("form")[0]
 
 usuario = form.select("input[type=text]")
 password = form.select("input[type=password]")
+usuario[0]["value"] = "nicolas.vivas"
+password[0]["value"] = "12345"
+
 print(usuario)
 print(password)
-
 
 
 #form.select("input")[0]["value"] = "zeus"
 #form.select("input")[1]["value"] = "ThunderDude"
 
-#profiles_page = browser.submit(form, login_page.url)
-#print(profiles_page.url)
+profiles_page = browser.submit(form, login_page.url)
 
+
+print(profiles_page.url)
+print(profiles_page.soup) # type: ignore
