@@ -2,8 +2,10 @@
 # coding: utf-8
 
 # In[268]:
+
 import time
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.common.by import By
 
 COMITENTE = "PODER JUDICIAL"
@@ -33,8 +35,10 @@ def calculoCiec():
 
 
 # In[269]:
-
-driver = webdriver.Chrome()
+options = ChromeOptions()
+options.add_argument("--headless")
+assert options.headless
+driver = webdriver.Chrome(options=options)
 driver.get("https://crmciec.hostingcrm.com.ar/index.php?module=Users&action=Login")
 
 # In[270]:
