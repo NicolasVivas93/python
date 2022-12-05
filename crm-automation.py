@@ -35,10 +35,10 @@ def calculoCiec():
 
 
 # In[269]:
-options = ChromeOptions()
-options.add_argument("--headless")
-assert options.headless
-driver = webdriver.Chrome(options=options)
+#options = ChromeOptions()
+#options.add_argument("--headless")
+#assert options.headless
+driver = webdriver.Chrome()#options=options)
 driver.get("https://crmciec.hostingcrm.com.ar/index.php?module=Users&action=Login")
 
 # In[270]:
@@ -135,9 +135,9 @@ driver.find_element(By.ID, value="description").send_keys(f'PER.JUD.{pericia.upp
 driver.find_element(By.XPATH, value='//*[@id="SAVE"]').click()
 
 # In[289]:
-
+time.sleep(5)
 # Iniciamos creación de Tarea de Expediente
-driver.find_element(By.XPATH, value='//*[@id="subpanel_title_opportunities_knn_tareasexpediente_1"]/div/div').click()
+driver.find_element(By.XPATH, value='/html/body/div[3]/div/div/ul/li[1]/div/div[1]/a/div').click()
 time.sleep(5)
 
 # In[290]:

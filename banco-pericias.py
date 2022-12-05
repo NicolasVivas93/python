@@ -62,7 +62,7 @@ def totalAPagar(tribunales,aporte_ciec):
 
 
 print("Perito:", perito)
-os.mkdir(f"C:/Users/nvivas/Desktop/PERICIAS/{perito}")
+os.mkdir(f"C:/Users/nvivas/OneDrive/Documentos/PERICIAS/{perito}")
 print("PER.JUD." + pericia.upper())
 print("Honorarios:", honorarios)
 print("")
