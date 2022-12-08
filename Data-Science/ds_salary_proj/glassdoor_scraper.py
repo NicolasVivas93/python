@@ -6,7 +6,7 @@ Created on Tue Dec  6 22:41:32 2022
 @author: nicolas
 """
 
-from selenium.common.exceptions import NoSuchElementException, ElementClickInterceptedException
+from selenium.common.exceptions import NoSuchElementException, ElementClickInterceptedException, ElementNotInteractableException
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
@@ -26,7 +26,7 @@ def get_jobs(keyword, num_jobs, verbose, path, slp_time):
     driver = webdriver.Chrome(executable_path=path, options=options)
     driver.set_window_size(1120, 1000)
 
-    url = 'https://www.glassdoor.com/Job/jobs.htm?sc.keyword="' + keyword + '"&locT=C&locId=1147401&locKeyword=San%20Francisco,%20CA&jobType=all&fromAge=-1&minSalary=0&includeNoSalaryJobs=true&radius=100&cityId=-1&minRating=0.0&industryId=-1&sgocId=-1&seniorityType=all&companyId=-1&employerSizes=0&applicationType=0&remoteWorkType=0'
+    url = 'https://www.glassdoor.com/Job/jobs.htm?sc.keyword=' + keyword + '&locT=C&locId=1147401&locKeyword=San%20Francisco,%20CA&jobType=all&fromAge=-1&minSalary=0&includeNoSalaryJobs=true&radius=100&cityId=-1&minRating=0.0&industryId=-1&sgocId=-1&seniorityType=all&companyId=-1&employerSizes=0&applicationType=0&remoteWorkType=0'
     driver.get(url)
     jobs = []
 
@@ -34,40 +34,42 @@ def get_jobs(keyword, num_jobs, verbose, path, slp_time):
 
         #Let the page load. Change this number based on your internet speed.
         #Or, wait until the webpage is loaded, instead of hardcoding it.
-        time.sleep(slp_time)
-
-        #Test for the "Sign Up" prompt and get rid of it.
-        try:
-            driver.find_element(By.CLASS_NAME, "selected").click()
-        except ElementClickInterceptedException:
-            pass
-
-        time.sleep(.1)
-
-        try:
-            driver.find_element(By.CLASS_NAME, "ModalStyle__xBtn___29PT9").click()  #clicking to the X.
-        except NoSuchElementException:
-            pass
+        time.sleep(slp_time) 
 
         
         #Going through each job in this page
-        job_buttons = driver.find_elements(By.CLASS_NAME, "jl")  #jl for Job Listing. These are the buttons we're going to click.
+        job_buttons = driver.find_elements(By.CLASS_NAME, "react-job-listing")  #jl for Job Listing. These are the buttons we're going to click.
         for job_button in job_buttons:  
 
             print("Progress: {}".format("" + str(len(jobs)) + "/" + str(num_jobs)))
             if len(jobs) >= num_jobs:
                 break
 
-            job_button.click()  #You might 
+            job_button.click()  #You might
+
+            #Test for the "Sign Up" prompt and get rid of it.
+            try:
+                driver.find_element(By.CLASS_NAME, "selected").click()
+            except ElementClickInterceptedException:
+                pass
+
+            time.sleep(.1)
+
+            try:
+                driver.find_element(By.CSS_SELECTOR, '[alt="Close"]').click()  #clicking to the X.
+            except NoSuchElementException:
+                pass
+
             time.sleep(1)
             collected_successfully = False
             
             while not collected_successfully:
                 try:
-                    company_name = driver.find_element(By.XPATH, './/div[@class="employerName"]').text
-                    location = driver.find_element(By.XPATH, './/div[@class="location"]').text
-                    job_title = driver.find_element(By.XPATH, './/div[contains(@class, "title")]').text
-                    job_description = driver.find_element(By.XPATH, './/div[@class="jobDescriptionContent desc"]').text
+                    job_index = job_buttons.index(job_button) + 1
+                    company_name = driver.find_element(By.XPATH, f'//*[@id="MainCol"]/div[1]/ul/li[{job_index}]/div[2]/div[1]/a/span').text
+                    location = driver.find_element(By.XPATH, f'//*[@id="MainCol"]/div[1]/ul/li[{job_index}]/div[2]/div[2]/span').text
+                    job_title = driver.find_element(By.XPATH, f'//*[@id="MainCol"]/div[1]/ul/li[{job_index}]/div[2]/a/span').text
+                    #job_description = driver.find_element(By.XPATH, './/div[@class="jobDescriptionContent desc"]').text
                     collected_successfully = True
                 except:
                     time.sleep(5)
@@ -86,7 +88,7 @@ def get_jobs(keyword, num_jobs, verbose, path, slp_time):
             if verbose:
                 print("Job Title: {}".format(job_title))
                 print("Salary Estimate: {}".format(salary_estimate))
-                print("Job Description: {}".format(job_description[:500]))
+                #print("Job Description: {}".format(job_description[:500]))
                 print("Rating: {}".format(rating))
                 print("Company Name: {}".format(company_name))
                 print("Location: {}".format(location))
@@ -168,7 +170,7 @@ def get_jobs(keyword, num_jobs, verbose, path, slp_time):
 
             jobs.append({"Job Title" : job_title,
             "Salary Estimate" : salary_estimate,
-            "Job Description" : job_description,
+            #"Job Description" : job_description,
             "Rating" : rating,
             "Company Name" : company_name,
             "Location" : location,
