@@ -26,7 +26,8 @@ def get_jobs(keyword, num_jobs, verbose, path, slp_time):
     driver = webdriver.Chrome(executable_path=path, options=options)
     driver.set_window_size(1120, 1000)
 
-    url = 'https://www.glassdoor.com/Job/jobs.htm?sc.keyword=' + keyword + '&locT=C&locId=1147401&locKeyword=San%20Francisco,%20CA&jobType=all&fromAge=-1&minSalary=0&includeNoSalaryJobs=true&radius=100&cityId=-1&minRating=0.0&industryId=-1&sgocId=-1&seniorityType=all&companyId=-1&employerSizes=0&applicationType=0&remoteWorkType=0'
+    url = f'https://www.glassdoor.com/Job/{keyword}-jobs-SRCH_KO0,14.htm'
+    #url = 'https://www.glassdoor.com/Job/jobs.htm?sc.keyword=' + keyword + '&locT=C&locId=1147401&locKeyword=San%20Francisco,%20CA&jobType=all&fromAge=-1&minSalary=0&includeNoSalaryJobs=true&radius=100&cityId=-1&minRating=0.0&industryId=-1&sgocId=-1&seniorityType=all&companyId=-1&employerSizes=0&applicationType=0&remoteWorkType=0'
     driver.get(url)
     jobs = []
 
@@ -39,6 +40,7 @@ def get_jobs(keyword, num_jobs, verbose, path, slp_time):
         
         #Going through each job in this page
         job_buttons = driver.find_elements(By.CLASS_NAME, "react-job-listing")  #jl for Job Listing. These are the buttons we're going to click.
+
         for job_button in job_buttons:  
 
             print("Progress: {}".format("" + str(len(jobs)) + "/" + str(num_jobs)))
@@ -48,10 +50,10 @@ def get_jobs(keyword, num_jobs, verbose, path, slp_time):
             job_button.click()  #You might
 
             #Test for the "Sign Up" prompt and get rid of it.
-            try:
-                driver.find_element(By.CLASS_NAME, "selected").click()
-            except ElementClickInterceptedException:
-                pass
+            #try:
+            #    driver.find_element(By.CLASS_NAME, "selected").click()
+            #except ElementClickInterceptedException:
+            #    pass
 
             time.sleep(.1)
 
@@ -75,12 +77,12 @@ def get_jobs(keyword, num_jobs, verbose, path, slp_time):
                     time.sleep(5)
 
             try:
-                salary_estimate = driver.find_element(By.XPATH, './/span[@class="gray small salary"]').text
+                salary_estimate = driver.find_element(By.XPATH, f'//*[@id="MainCol"]/div[1]/ul/li[{job_index}]/div[2]/div[3]/div[1]/span').text
             except NoSuchElementException:
                 salary_estimate = -1 #You need to set a "not found value. It's important."
             
             try:
-                rating = driver.find_element(By.XPATH, './/span[@class="rating"]').text
+                rating = driver.find_element(By.XPATH, f'//*[@id="MainCol"]/div[1]/ul/li[{job_index}]/div[1]/span').text
             except NoSuchElementException:
                 rating = -1 #You need to set a "not found value. It's important."
 
@@ -106,18 +108,18 @@ def get_jobs(keyword, num_jobs, verbose, path, slp_time):
                     #    Headquarters
                     #    San Francisco, CA
                     #
-
+                    
                     headquarters = driver.find_element(By.XPATH, './/div[@class="infoEntity"]//label[text()="Headquarters"]//following-sibling::*').text
                 except NoSuchElementException:
                     headquarters = -1
 
                 try:
-                    size = driver.find_element(By.XPATH, './/div[@class="infoEntity"]//label[text()="Size"]//following-sibling::*').text
+                    size = driver.find_element(By.XPATH, '//*[@id="EmpBasicInfo"]/div[1]/div/div[1]/span[2]').text
                 except NoSuchElementException:
                     size = -1
 
                 try:
-                    founded = driver.find_element(By.XPATH, './/div[@class="infoEntity"]//label[text()="Founded"]//following-sibling::*').text
+                    founded = driver.find_element(By.XPATH, '//*[@id="EmpBasicInfo"]/div[1]/div/div[2]/span[2]').text
                 except NoSuchElementException:
                     founded = -1
 
@@ -127,17 +129,17 @@ def get_jobs(keyword, num_jobs, verbose, path, slp_time):
                     type_of_ownership = -1
 
                 try:
-                    industry = driver.find_element(By.XPATH, './/div[@class="infoEntity"]//label[text()="Industry"]//following-sibling::*').text
+                    industry = driver.find_element(By.XPATH, '//*[@id="EmpBasicInfo"]/div[1]/div/div[4]/span[2]').text
                 except NoSuchElementException:
                     industry = -1
 
                 try:
-                    sector = driver.find_element(By.XPATH, './/div[@class="infoEntity"]//label[text()="Sector"]//following-sibling::*').text
+                    sector = driver.find_element(By.XPATH, '//*[@id="EmpBasicInfo"]/div[1]/div/div[5]/span[2]').text
                 except NoSuchElementException:
                     sector = -1
 
                 try:
-                    revenue = driver.find_element(By.XPATH, './/div[@class="infoEntity"]//label[text()="Revenue"]//following-sibling::*').text
+                    revenue = driver.find_element(By.XPATH, '//*[@id="EmpBasicInfo"]/div[1]/div/div[6]/span[2]').text
                 except NoSuchElementException:
                     revenue = -1
 
