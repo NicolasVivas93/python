@@ -11,4 +11,5 @@ import pandas as pd
 
 path = "/home/nicolas/bin/chromedriver"
 
-df = gs.get_jobs('data scientist', 15, False, path, 15)
+df = gs.get_jobs("data scientist", 15, False, path, 9)
+
