@@ -134,13 +134,7 @@ driver.find_element(By.ID, value="description").send_keys(f'PER.JUD.{pericia.upp
 driver.find_element(By.XPATH, value='//*[@id="SAVE"]').click()
 
 # In[289]:
-time.sleep(7)
-try:
-    # Traemos nro de expediente - probar
-    nro_expediente = driver.find_element(By.XPATH, value='//*[@id="fi_expe_c"]').text
-except:
-    pass
-
+time.sleep(5)
 # Iniciamos creación de Tarea de Expediente
 driver.find_element(By.XPATH, value='/html/body/div[3]/div/div/ul/li[1]/div/div[1]/a/div').click()
 time.sleep(5)
@@ -150,7 +144,7 @@ time.sleep(5)
 driver.find_element(By.LINK_TEXT, value="Nuevo").click()
 
 # In[291]:
-time.sleep(3)
+
 driver.find_element(By.XPATH, value='//*[@id="tipo_tarea_c"]/option[29]').click()
 
 # In[292]:
@@ -318,36 +312,9 @@ driver.find_element(By.XPATH, value='//*[@id="popupForm"]/table/tbody/tr[3]/td[2
 # In[321]:
 
 time.sleep(5)
+# Traemos nro de expediente - probar
+#driver.find_element(By.XPATH, value='//*[@id="opportunities_knn_tareasexpediente_1opportunities_ida"]').text
 driver.quit()
 
-os.mkdir(f"C:/Users/nvivas/OneDrive/Documentos/PERICIAS/{perito}")
-
-print(f"""
-Nro. Expediente: {nro_expediente}
-Comitente: PODER JUDICIAL DE LA PROVINCIA DE CORDOBA
-Autos: PER.JUD.{pericia.upper()}
-
-Aporte 5%: {aportes5(honorarios)}
-Total aportes: {calculoCiec()}
-
-Total a pagar a perito: {totalAPagar(pago_tribunales, calculoCiec())}
-CBU: {cbu}
-
-VALIDACIONES:
-------------
-
-""")
-
-if validarAportesCaja(calculoCaja(honorarios), monto_caja) < 0:
-    print("Existe una diferencia de aportes de:", validarAportesCaja(calculoCaja(honorarios), monto_caja), "- (Pagó de más)")
-elif validarAportesCaja(calculoCaja(honorarios), monto_caja) > 0:
-    print("Existe una diferencia de aportes de:", validarAportesCaja(calculoCaja(honorarios), monto_caja), "- (Pagó de menos)")
-else:
-    print("No hay diferencias de aportes a la Caja")
-    
-if validarAportesSellos(calculoSellos(honorarios), pago_sellos) < 0:
-    print("Existe una diferencia de sellos de:", validarAportesSellos(calculoSellos(honorarios), pago_sellos), "- (Pagó de más)")
-elif validarAportesSellos(calculoSellos(honorarios), pago_sellos) > 0:
-    print("Existe una diferencia de sellos de:", validarAportesSellos(calculoSellos(honorarios), pago_sellos), "- (Pagó de menos)")
-else:
-    print("No hay diferencias de pago a sellos")
+print("Aporte 5%:", aportes5(honorarios))
+print("Total aportes:", calculoCiec())
